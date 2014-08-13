@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
         contactListView = (ListView) findViewById(R.id.listView);
         ivContactImage = (ImageView) findViewById(R.id.ivContactImage);
         dbHandler = new DatabaseHandler(getApplicationContext());
-        ClearCreator();
+        clearCreator();
 
 
         final Button addBtn = (Button) findViewById(R.id.btnAdd);
@@ -87,6 +87,7 @@ public class MainActivity extends ActionBarActivity {
                 SortContacts();
                 //This is the warning message that does not need to dismiss
                 Toast.makeText(getApplicationContext(), nameTxt.getText().toString() + " have been Created", Toast.LENGTH_SHORT).show();
+                clearCreator();
             }
         });
 
@@ -416,7 +417,7 @@ public class MainActivity extends ActionBarActivity {
         contactAdapter.notifyDataSetChanged();
     }
 
-    private void ClearCreator(){
+    private void clearCreator(){
         nameTxt.setText("");
         phoneTxt.setText("");
         emailTxt.setText("");
