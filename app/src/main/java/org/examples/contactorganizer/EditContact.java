@@ -13,9 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.examples.contactorganizer.R;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -49,7 +46,6 @@ public class EditContact  extends Activity {
             String address = i.getStringExtra("address");
             final String tempImageUir = i.getStringExtra("image");
             final String tempContactID = i.getStringExtra("id");
-            int contactID = Integer.parseInt(tempContactID);
             Uri imageUri = Uri.parse(tempImageUir);
 
             txtPhone.setText(phone);
@@ -57,13 +53,8 @@ public class EditContact  extends Activity {
             txtName.setText(name);
             txtAddress.setText(address);
             setContactImage(ivContact,imageUri);
-
-            // Displaying Received data
             txtName.setText(name);
             txtEmail.setText(email);
-
-
-           // getApplication().d
 
             // Binding Click event to Button
             btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -112,11 +103,6 @@ public class EditContact  extends Activity {
     }
 
     private void setContactImage(ImageView imageView, Uri imageUri) {
-        // imageView.setImageURI(currentContact.get_imageUri())
-        String filePath = null;
-
-        Log.d("", "URI = " + imageUri);
-
         String url = imageUri.toString();
 
         if (url.startsWith("content://com.google.android.apps.photos.content")) {
@@ -147,7 +133,7 @@ public class EditContact  extends Activity {
     }
 
     private String parseGoogleUri(Uri uri){
-        String buildURL = "";
+        String buildURL ;
         String googleUri = String.valueOf(uri);
         String initParse = "https";
         String[] tokens = googleUri.split(initParse);

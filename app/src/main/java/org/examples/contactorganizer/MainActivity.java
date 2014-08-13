@@ -1,13 +1,9 @@
 package org.examples.contactorganizer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +13,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,15 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -72,7 +66,6 @@ public class MainActivity extends ActionBarActivity {
         contactListView = (ListView) findViewById(R.id.listView);
         ivContactImage = (ImageView) findViewById(R.id.ivContactImage);
         dbHandler = new DatabaseHandler(getApplicationContext());
-        clearCreator();
 
 
         final Button addBtn = (Button) findViewById(R.id.btnAdd);
@@ -80,14 +73,16 @@ public class MainActivity extends ActionBarActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Contact contact = new Contact(dbHandler.getContactsCount() + 1, String.valueOf(nameTxt.getText()), String.valueOf(phoneTxt.getText()), String.valueOf(emailTxt.getText()), String.valueOf(addressTxt.getText()), imageUir);
+
+
+                Contact contact = new Contact(0, String.valueOf(nameTxt.getText()), String.valueOf(phoneTxt.getText()), String.valueOf(emailTxt.getText()), String.valueOf(addressTxt.getText()), imageUir);
                 //addContact(0,nameTxt.getText().toString(),phoneTxt.getText().toString(),emailTxt.getText().toString(),addressTxt.getText().toString(),imageUir);
                 dbHandler.createContact(contact);
                 Contacts.add(contact);
                 SortContacts();
+
                 //This is the warning message that does not need to dismiss
                 Toast.makeText(getApplicationContext(), nameTxt.getText().toString() + " have been Created", Toast.LENGTH_SHORT).show();
-                clearCreator();
             }
         });
 
@@ -145,8 +140,9 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
-        if (dbHandler.getContactsCount() != 0)
+        if (dbHandler.getContactsCount() != 0) {
             Contacts.addAll(dbHandler.getAllContacts());
+        }
 
         populateList();
     }
@@ -312,11 +308,7 @@ public class MainActivity extends ActionBarActivity {
             TextView address = (TextView) view.findViewById(R.id.cAddress);
             address.setText(currentContact.get_addess());
 
-
-            //ImageView contactImage = (ImageView) view.findViewById(R.id.ivContact);
             setContactImage((ImageView) view.findViewById(R.id.ivContact), currentContact,position);
-
-            //contactImage.setImageURI(currentContact.get_imageUri());
 
             return view;
         }
@@ -342,6 +334,7 @@ public class MainActivity extends ActionBarActivity {
             imageView.setImageURI(currentContact.get_imageUri());
         }
     }
+
     private class DownloadBitmap extends AsyncTask<Void, Void, Void> {
         ImageView _image;
         Contact _contact;
@@ -371,8 +364,12 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Void args) {
             View contactView = contactListView.getChildAt(_position);
-            _image = (ImageView) contactView.findViewById(R.id.ivContact);
-            _image.setImageBitmap(_bitmap);
+            if (contactView != null) {
+                _image = (ImageView) contactView.findViewById(R.id.ivContact);
+                Contact contact = Contacts.get(_position);
+                if (_contact.get_id() == contact.get_id())
+                    _image.setImageBitmap(_bitmap);
+            }
         }
     }
 
@@ -423,6 +420,7 @@ public class MainActivity extends ActionBarActivity {
         emailTxt.setText("");
         addressTxt.setText("");
         ivContactImage.setImageDrawable(getResources().getDrawable(R.drawable.contact_image));
+
     }
 }
 

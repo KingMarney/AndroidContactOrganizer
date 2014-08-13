@@ -4,62 +4,75 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Contacts Editor"
-        android:id="@+id/lblEditor"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" >
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/ivContactImageEditor"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/contact_image" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtNameEditor"
-        android:layout_marginTop="15dp"
-        android:hint="Contacts Name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Contacts Editor"
+                android:id="@+id/lblEditor"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtPhoneEditor"
-        android:layout_marginTop="15dp"
-        android:hint="Phone"
-        android:inputType="phone" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/ivContactImageEditor"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/contact_image" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtEmailEditor"
-        android:layout_marginTop="15dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtNameEditor"
+                android:layout_marginTop="15dp"
+                android:hint="Contacts Name" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtAddessEditor"
-        android:inputType="textPostalAddress"
-        android:hint="Addess"
-        android:layout_marginTop="15dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPhoneEditor"
+                android:layout_marginTop="15dp"
+                android:hint="Phone"
+                android:inputType="phone" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/btnSubmit"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:enabled="true"
-        android:clickable="false" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtEmailEditor"
+                android:layout_marginTop="15dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAddessEditor"
+                android:inputType="textPostalAddress"
+                android:hint="Addess"
+                android:layout_marginTop="15dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/btnSubmit"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:enabled="true"
+                android:clickable="false" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

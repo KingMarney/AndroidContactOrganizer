@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by marneypt on 8/10/14.
@@ -45,10 +48,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void createContact(Contact contact) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
+
+        Random randomGenerator = new Random();
+        int count;
+        int randomInt;
+
+        do{
+            randomInt = randomGenerator.nextInt();
+            if(randomInt<0)
+                randomInt=randomInt*-1;
+            Cursor cursor = db.query(TABLE_CONTACTS,new String[]{KEY_ID},KEY_ID + "=?", new String[]{ String.valueOf(randomInt)},null,null,null,null);
+            count = cursor.getCount();
+
+        }while(count != 0);
+        db.close();
+
+        db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID,contact.get_id());
+        values.put(KEY_ID,randomInt);
         values.put(KEY_NAME,contact.get_name());
         values.put(KEY_PHONE,contact.get_phone());
         values.put(KEY_EMAIL,contact.get_email());
@@ -131,6 +150,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
+
+        Collections.sort(contacts, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact person1, Contact person2) {
+
+                return person1.get_name().compareTo(person2.get_name());
+            }
+        });
+
         return contacts;
     }
 }
